@@ -24,7 +24,7 @@ class ShowServiceTest {
 		
 		Movie movie2=new Movie("movie2", "as", "as", "sa", "as");
 
-		Show show=new Show(LocalDateTime.now(), LocalDateTime.now(), "show1", movie2, 6, 4);
+		Show show=new Show(null, null, "show1", movie2, 6, 4);
 		System.out.println(showServiceImplementation.addShow(show));
 	}
 	
@@ -38,8 +38,9 @@ class ShowServiceTest {
 
 //	@Test
 	void testRemoveShow() {
-		Show show=new Show(100,null, LocalDateTime.now(), "show2_updated", null, 6, 4);
-		showServiceImplementation.removeShow(show);
+		Movie movie2=new Movie("movie2", "as", "as", "sa", "as");
+		Show show=new Show(null, null, "show1", movie2, 6, 4);
+		System.out.println(showServiceImplementation.removeShow(show));
 	}
 	
 //	@Test

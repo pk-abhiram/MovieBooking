@@ -27,8 +27,12 @@ public class MovieServiceImplementation implements MovieService {
 	ShowRepository showRepository;
 	
 	public Movie addMovie(Movie movie) {
-		movieRepository.save(movie);
-		return movie;
+		Optional<Movie> findMovie=movieRepository.findById(movie.getMovieId());
+		if(findMovie.isEmpty()) {
+			movieRepository.save(movie);
+			return movie;
+		}
+		return null;
 	}
 	
 	@Transactional
@@ -51,8 +55,8 @@ public class MovieServiceImplementation implements MovieService {
 		return updateMovie;
 	}
 	
-	public Movie removeMovie(Movie movie) {
-		Optional<Movie> findRemoveMovie=movieRepository.findById(movie.getMovieId());
+	public Movie removeMovie(int movieId) {
+		Optional<Movie> findRemoveMovie=movieRepository.findById(movieId);
 		Movie removeMovie=null;
 		if(findRemoveMovie.isPresent()) {
 		removeMovie=findRemoveMovie.get();
@@ -78,7 +82,7 @@ public class MovieServiceImplementation implements MovieService {
 		
 		List<Movie>movies=null;
 		if(theatres.isPresent())
-		movies=theatres.get().getListOfMovies();
+		{	movies=theatres.get().getListOfMovies();}
 		return movies;
 	}
 	public List<Movie>viewMovieList(LocalDate date){

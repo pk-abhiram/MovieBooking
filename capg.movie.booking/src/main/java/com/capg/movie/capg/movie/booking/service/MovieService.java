@@ -14,7 +14,7 @@ public interface MovieService {
 	public Movie addMovie(Movie movie);
 	@Transactional
 	public Movie updateMovie(Movie movie);
-	public Movie removeMovie(Movie movie);
+	public Movie removeMovie(int movieId);
 	public Movie viewMovie(int movieId);
 	public List<Movie>viewMovieList();
 	public List<Movie>viewMovieList(int theatreId);

@@ -60,13 +60,19 @@ ScreenRepository screenRepository;
 	}
 	
 	public Show removeShow(Show show) {
-		Optional<Show> findRemoveShow=showRepository.findById(show.getShowId());
-		Show removeShow=null;
-		if(findRemoveShow.isPresent()) {
-		removeShow=findRemoveShow.get();
-		showRepository.delete(removeShow);
+		
+		if(show!=null) {
+			for(Show findShow:showRepository.findAll()) {
+				System.out.println(findShow);
+				if(findShow.equals(show)) {
+					System.out.println(show);
+					showRepository.delete(findShow);
+					return show;
+				}
+			}
+			
 		}
-		return removeShow;
+		return null;
 	}
 	
 	public Show viewShow(Show show) {

@@ -31,22 +31,22 @@ class MovieServiceTest {
 	
 //	@Test
 	void testAddMovie() {
-		Movie movie=new Movie("2 Idiots", "Comedy", "2:30", "Hindi", "College");
+		Movie movie=new Movie("3 Idiots", "Comedy", "2:30", "Hindi", "College");
 		Movie addMovie=movieServiceImplementation.addMovie(movie);
 		System.out.println(addMovie);
 	}
 	
 //	@Test
 	void testUpdateMovie() {
-		Movie movie=new Movie(1,"3 Idiots", null, "2:30", null, null);
+		Movie movie=new Movie(1,"3 Idiots", null, "2:40", null, null);
 		Movie updateMovie=movieServiceImplementation.updateMovie(movie);
 		System.out.println(updateMovie);
 	}
 	
 //	@Test
 	void testRemoveMovie() {
-		Movie movie=new Movie(2,"2 Idiots", "Comedy", "2:30", "Hindi", "College");
-		Movie removeMovie=movieServiceImplementation.removeMovie(movie);
+		int movieId=3;
+		Movie removeMovie=movieServiceImplementation.removeMovie(movieId);
 		System.out.println(removeMovie);
 	}
 	
