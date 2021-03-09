@@ -2,9 +2,13 @@ package com.capg.movie.capg.movie.booking.servicesImplementation;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.capg.movie.capg.movie.booking.entities.Movie;
+import com.capg.movie.capg.movie.booking.entities.Screen;
 import com.capg.movie.capg.movie.booking.entities.Theatre;
 import com.capg.movie.capg.movie.booking.repository.ShowRepository;
 import com.capg.movie.capg.movie.booking.repository.TheatreRepository;
@@ -17,7 +21,13 @@ public class TheatreServiceImplementation implements TheatreService{
 	
 	@Autowired
 	ShowRepository showRepository;
+	
+	@Autowired
+	MovieServiceImplementation movieServiceImplementation;
 
+	@Autowired
+	ScreenServiceImplementation screenServiceImplementation;
+	
 	public Theatre addTheatre(Theatre theatre) {
 		theatreRepository.save(theatre);
 		return theatre;
@@ -56,9 +66,9 @@ public class TheatreServiceImplementation implements TheatreService{
 	}
 	
 	public Theatre viewTheatreById(int theatreId) {
-		Optional<Theatre> findRemoveTheatre=theatreRepository.findById(theatreId);
-		if(findRemoveTheatre.isPresent()) {
-			return findRemoveTheatre.get();
+		Optional<Theatre> findTheatre=theatreRepository.findById(theatreId);
+		if(findTheatre.isPresent()) {
+			return findTheatre.get();
 		}
 		return null;
 	}
@@ -83,4 +93,61 @@ public class TheatreServiceImplementation implements TheatreService{
 		return removeTheatre;
 	}
 
+	public Theatre theatreAddMovie(int theatreId,Movie movie) {
+		Optional<Theatre> findTheatre=theatreRepository.findById(theatreId);
+		if(findTheatre.isPresent()) {
+			Theatre theatre=findTheatre.get();
+			theatre.getListOfMovies().add(movie);
+			theatreRepository.save(theatre);
+			return theatre;
+		}
+		return null;
+	}
+	
+	public Theatre theatreRemoveMovie(int theatreId,int movieid) {
+		Optional<Theatre> findTheatre=theatreRepository.findById(theatreId);
+		if(findTheatre.isPresent()) {
+			Theatre theatre=findTheatre.get();
+			if(movieServiceImplementation.viewMovie(movieid)!=null && theatre.getListOfMovies().get(theatre.getListOfMovies().indexOf(movieServiceImplementation.viewMovie(movieid)))!=null)
+			{
+			theatre.getListOfMovies().remove(movieServiceImplementation.viewMovie(movieid));
+			theatreRepository.save(theatre);
+			return theatre;
+			}
+		}
+		return null;
+	}
+	
+	public Theatre theatreAddScreen(int theatreId,Screen screen) {
+		Optional<Theatre> findTheatre=theatreRepository.findById(theatreId);
+		if(findTheatre.isPresent() && findTheatre.get().getTheatreId()==screen.getTheatreId()) {
+			Theatre theatre=findTheatre.get();
+			theatre.getListOfScreens().add(screen);
+			theatreRepository.save(theatre);
+			return theatre;
+		}
+		return null;
+	}
+	
+	public Theatre theatreRemoveScreen(int theatreId,int screenId) {
+		Optional<Theatre> findTheatre=theatreRepository.findById(theatreId);
+		if(findTheatre.isPresent()) {
+			Theatre theatre=findTheatre.get();
+			
+			for(Screen s:theatre.getListOfScreens())
+			{
+				if(s.getScreenId()==screenId)
+				{
+					
+					theatre.getListOfScreens().remove(s);
+					theatreRepository.save(theatre);
+					System.out.println();
+					
+					return theatre;
+				}
+			
+			}
+		}
+		return null;
+	}
 }

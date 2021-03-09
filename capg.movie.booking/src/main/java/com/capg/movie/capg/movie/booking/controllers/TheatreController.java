@@ -29,12 +29,12 @@ public class TheatreController {
 	TheatreRepository theatreRepository;
 	
 	@RequestMapping(value="/" , method = RequestMethod.POST)
-	public ResponseEntity<Void> addScreen(@RequestBody Theatre theatre) {
-		ResponseEntity<Void>  re;
+	public ResponseEntity<Theatre> addTheatre(@RequestBody Theatre theatre) {
+		ResponseEntity<Theatre>  re;
 		Optional<Theatre> findTheatre = theatreRepository.findById(theatre.getTheatreId());
 		if(findTheatre.isEmpty()) {
 			theatreServiceImplementation.addTheatre(theatre);
-			 re = new ResponseEntity<>(HttpStatus.CREATED);
+			 re = new ResponseEntity<>(theatre,HttpStatus.CREATED);
 		}
 		else {
 			throw new TheatreAlreadyExistsException("Theatre Already Exist with ID : " +  theatre.getTheatreId());

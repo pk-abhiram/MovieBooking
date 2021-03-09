@@ -103,6 +103,60 @@ public class Show {
 				+ ", showName=" + showName + ", movie=" + movie + ", screenid=" + screenid + ", theatreId=" + theatreId
 				+ "]";
 	}
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((movie == null) ? 0 : movie.hashCode());
+		result = prime * result + screenid;
+		result = prime * result + ((showEndTime == null) ? 0 : showEndTime.hashCode());
+		result = prime * result + ((showName == null) ? 0 : showName.hashCode());
+		result = prime * result + ((showStartTime == null) ? 0 : showStartTime.hashCode());
+		result = prime * result + theatreId;
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Show other = (Show) obj;
+		if (movie == null) {
+			if (other.movie != null)
+				return false;
+		} else if (!movie.equals(other.movie))
+			return false;
+		if (screenid != other.screenid)
+			return false;
+		if (showEndTime == null) {
+			if (other.showEndTime != null)
+				return false;
+		} else if (!showEndTime.equals(other.showEndTime))
+			return false;
+		if (showName == null) {
+			if (other.showName != null)
+				return false;
+		} else if (!showName.equals(other.showName))
+			return false;
+		if (showStartTime == null) {
+			if (other.showStartTime != null)
+				return false;
+		} else if (!showStartTime.equals(other.showStartTime))
+			return false;
+		if (theatreId != other.theatreId)
+			return false;
+		return true;
+	}
+	
 	
 	
 }

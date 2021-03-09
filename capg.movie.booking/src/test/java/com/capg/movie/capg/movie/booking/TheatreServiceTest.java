@@ -56,7 +56,7 @@ class TheatreServiceTest {
 //	@Test
 	void testViewTheatreById() {
 		int theatreId=5;
-		theatreServiceImplementation.viewTheatreById(theatreId);
+		System.out.println(theatreServiceImplementation.viewTheatreById(theatreId));
 	}
 	
 //	@Test
@@ -76,5 +76,32 @@ class TheatreServiceTest {
 		System.out.println(theatreServiceImplementation.removeTheatre(theatreId));
 	}
 	
+//	@Test
+	public void testTheatreAddMovie() {
+		Movie movie2=new Movie("movie5", "as", "as", "sa", "as");
+		int theatreId=5;
+		System.out.println(theatreServiceImplementation.theatreAddMovie(theatreId, movie2));
+	}
+	
+//	@Test
+	public void testTheatreRemoveMovie() {
+		int theatreId=5;
+		int movieId=200;
+		System.out.println(theatreServiceImplementation.theatreRemoveMovie(theatreId, movieId));
+	}
+	
+//	@Test
+	public void testTheatreAddScreen() {
+		Screen screen=new Screen(5, null, null, 0, 0);
+		int theatreId=5;
+		System.out.println(theatreServiceImplementation.theatreAddScreen(theatreId, screen));
+	}
+	
+//	@Test
+	public void testTheatreRemoveScreen() {
+		int theatreId=5;
+		int screenId=14;
+		System.out.println(theatreServiceImplementation.theatreRemoveScreen(theatreId, screenId));
+	}
 }
 

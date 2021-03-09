@@ -60,7 +60,7 @@ ScreenServiceImplementation screenServiceImplementation;
 	
 //	@Test
 	void testViewScreenListByTheatreId() {
-		int theatreId=2;
+		int theatreId=4;
 		screenServiceImplementation.viewScreenList(theatreId);
 	}
 	
@@ -69,4 +69,5 @@ ScreenServiceImplementation screenServiceImplementation;
 		int screenId=3;
 		screenServiceImplementation.removeScreen(screenId);
 	}
+	
 }

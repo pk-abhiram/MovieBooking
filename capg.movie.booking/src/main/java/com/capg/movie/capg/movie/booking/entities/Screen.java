@@ -103,6 +103,48 @@ public class Screen {
 		return "Screen [screenId=" + screenId + ", theatreId=" + theatreId + ", screenName=" + screenName
 				+ ", showList=" + showList + ", rows=" + rows + ", columns=" + columns + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + columns;
+		result = prime * result + rows;
+		result = prime * result + ((screenName == null) ? 0 : screenName.hashCode());
+		result = prime * result + ((showList == null) ? 0 : showList.hashCode());
+		result = prime * result + theatreId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Screen other = (Screen) obj;
+		if (columns != other.columns)
+			return false;
+		if (rows != other.rows)
+			return false;
+		if (screenName == null) {
+			if (other.screenName != null)
+				return false;
+		} else if (!screenName.equals(other.screenName))
+			return false;
+		if (showList == null) {
+			if (other.showList != null)
+				return false;
+		} else if (!showList.equals(other.showList))
+			return false;
+		if (theatreId != other.theatreId)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }
