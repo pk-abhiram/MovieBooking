@@ -63,15 +63,19 @@ public class MovieServiceImplementation implements MovieService {
 	
 	public Movie viewMovie(int movieId) {
 		Optional<Movie> findRemoveMovie=movieRepository.findById(movieId);
-		return findRemoveMovie.get();
+		if(findRemoveMovie.isPresent()) {
+			return findRemoveMovie.get();
+		}
+		return null;
 	}
 	public List<Movie>viewMovieList(){
 		List<Movie>movies=movieRepository.findAll();
 		return movies;
 	}
-	
+	@Transactional
 	public List<Movie>viewMovieList(int theatreId){
 		Optional<Theatre>theatres=theatreRepository.findById(theatreId);
+		
 		List<Movie>movies=null;
 		if(theatres.isPresent())
 		movies=theatres.get().getListOfMovies();

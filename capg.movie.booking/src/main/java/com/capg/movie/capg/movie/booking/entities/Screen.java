@@ -1,16 +1,16 @@
 package com.capg.movie.capg.movie.booking.entities;
 
-import java.util.List;
 
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 @Entity
@@ -18,14 +18,14 @@ public class Screen {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int screenId;
-	@JoinTable(name = "Theatre",joinColumns = @JoinColumn(name = "theatreId", referencedColumnName = "theatreId"), inverseJoinColumns = @JoinColumn(name = "theatreId", referencedColumnName = "theatreId"))
 	int theatreId;
 	String screenName;
 	@OneToMany(targetEntity = Show.class,cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Show> showList;
 	int rows;
 	int columns;
-	
+
 	public Screen() {
 		super();
 	}
@@ -79,7 +79,7 @@ public class Screen {
 	}
 
 	public void setShowList(List<Show> showList) {
-		this.showList = showList;
+		this.showList=showList;
 	}
 
 	public int getRows() {

@@ -20,7 +20,7 @@ public class Show {
 	LocalDateTime showStartTime;
 	LocalDateTime showEndTime;
 	String showName;
-	@OneToOne(targetEntity = Movie.class,cascade = CascadeType.PERSIST)
+	@OneToOne(targetEntity = Movie.class,cascade = CascadeType.ALL)
 	Movie movie;
 	int screenid;
 	int theatreId;

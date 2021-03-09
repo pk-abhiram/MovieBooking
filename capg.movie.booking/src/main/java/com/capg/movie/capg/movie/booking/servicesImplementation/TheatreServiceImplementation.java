@@ -1,9 +1,7 @@
 package com.capg.movie.capg.movie.booking.servicesImplementation;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,18 +57,30 @@ public class TheatreServiceImplementation implements TheatreService{
 	
 	public Theatre viewTheatreById(int theatreId) {
 		Optional<Theatre> findRemoveTheatre=theatreRepository.findById(theatreId);
-		return findRemoveTheatre.get();
+		if(findRemoveTheatre.isPresent()) {
+			return findRemoveTheatre.get();
+		}
+		return null;
 	}
 	public List<Theatre>viewTheatreList(){
 		List<Theatre>theatres=theatreRepository.findAll();
 		return theatres;
 	}
 	
-	public List<Theatre>viewTheatreList(int theatreId){
-		Optional<Theatre>theatresByID=theatreRepository.findById(theatreId);
-		List<Theatre>theatres=new ArrayList<Theatre>();
-		theatres=theatresByID.stream().collect(Collectors.toList());	
+	public List<Theatre>viewTheatreListByCity(String City){
+		List<Theatre>theatres=theatreRepository.findTheatreWithCity(City);
+			
 		return theatres;
+	}
+	
+	public Theatre removeTheatre(int theatreId) {
+		Optional<Theatre> findRemoveTheatre=theatreRepository.findById(theatreId);
+		Theatre removeTheatre=null;
+		if(findRemoveTheatre.isPresent()) {
+		removeTheatre=findRemoveTheatre.get();
+		theatreRepository.delete(removeTheatre);
+		}
+		return removeTheatre;
 	}
 
 }

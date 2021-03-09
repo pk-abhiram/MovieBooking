@@ -13,5 +13,5 @@ public interface TheatreService {
 	public Theatre updateTheatre(Theatre theatre);
 	public Theatre removeTheatre(Theatre theatre);
 	public Theatre viewTheatreById(int theatreId);
-	public List<Theatre>viewTheatreList(int theatreId);
+	public List<Theatre>viewTheatreListByCity(String City);
 }

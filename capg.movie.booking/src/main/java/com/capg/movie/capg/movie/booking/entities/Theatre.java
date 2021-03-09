@@ -4,10 +4,14 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 public class Theatre {
@@ -16,9 +20,11 @@ public class Theatre {
 	int theatreId;
 	String theatreName;
 	String theatreCity;
-	@OneToMany(targetEntity = Movie.class,cascade = CascadeType.PERSIST)
+	@OneToMany(targetEntity = Movie.class,cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Movie> listOfMovies;
-	@OneToMany(targetEntity = Screen.class,cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Screen.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Screen> listOfScreens;
 	String managerName;
 	String managerContact;

@@ -1,20 +1,33 @@
 package com.capg.movie.capg.movie.booking;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.capg.movie.capg.movie.booking.entities.Movie;
+import com.capg.movie.capg.movie.booking.entities.Screen;
+import com.capg.movie.capg.movie.booking.entities.Show;
+import com.capg.movie.capg.movie.booking.entities.Theatre;
+import com.capg.movie.capg.movie.booking.repository.ShowRepository;
 import com.capg.movie.capg.movie.booking.servicesImplementation.MovieServiceImplementation;
+import com.capg.movie.capg.movie.booking.servicesImplementation.ShowServiceImplementation;
+import com.capg.movie.capg.movie.booking.servicesImplementation.TheatreServiceImplementation;
 @SpringBootTest
 class MovieServiceTest {
 
 	@Autowired
 	MovieServiceImplementation movieServiceImplementation;
 	
+	@Autowired
+	TheatreServiceImplementation theatreServiceImplementation ; 
+	
+	@Autowired
+	ShowServiceImplementation showServiceImplementation;
 	
 //	@Test
 	void testAddMovie() {
@@ -52,10 +65,10 @@ class MovieServiceTest {
 //	@Test
 	void testViewMovieListByTheatreId() {
 		int theatreId=1;
-		List<Movie>movies=movieServiceImplementation.viewMovieList(theatreId);
-		System.out.println(movies);
+		List<Movie>movies1=movieServiceImplementation.viewMovieList(theatreId);
+		System.out.println(movies1);
 	}
-//	@Test
+	//@Test
 	void testViewMovieListByDate() {
 		LocalDate date=LocalDate.now();
 		List<Movie>movies=movieServiceImplementation.viewMovieList(date);

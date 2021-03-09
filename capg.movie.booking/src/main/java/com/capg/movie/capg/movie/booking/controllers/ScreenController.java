@@ -14,55 +14,68 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capg.movie.capg.movie.booking.entities.Screen;
+import com.capg.movie.capg.movie.booking.entities.Theatre;
 import com.capg.movie.capg.movie.booking.exceptions.ScreenAlreadyExistsException;
+import com.capg.movie.capg.movie.booking.exceptions.ScreenNotExistsException;
+import com.capg.movie.capg.movie.booking.exceptions.TheatreNotExistsException;
 import com.capg.movie.capg.movie.booking.repository.ScreenRepository;
+import com.capg.movie.capg.movie.booking.repository.TheatreRepository;
 import com.capg.movie.capg.movie.booking.servicesImplementation.ScreenServiceImplementation;
 
 @RestController
+@RequestMapping(value = "/screen")
 public class ScreenController {
 
 	@Autowired
-	ScreenServiceImplementation ScreenServiceImplementation;
+	ScreenServiceImplementation screenServiceImplementation;
 	
 	@Autowired
 	ScreenRepository screenRepository;
 	
-	@RequestMapping(value="/screen" , method = RequestMethod.POST)
+	@Autowired
+	TheatreRepository theatreRepository; 
+	
+	@RequestMapping(value="/" , method = RequestMethod.POST)
 	public ResponseEntity<Void> addScreen(@RequestBody Screen screen) {
 		ResponseEntity<Void>  re;
-		
 		Optional<Screen> findScreen = screenRepository.findById(screen.getScreenId());
 		if(findScreen.isEmpty()) {
-			ScreenServiceImplementation.addScreen(findScreen.get());
+			Optional<Theatre>findTheatre=theatreRepository.findById(screen.getTheatreId());
+			if(findTheatre.isPresent()) {
+			screenServiceImplementation.addScreen(screen);
 			 re = new ResponseEntity<>(HttpStatus.CREATED);
+			}
+			else {
+				throw new TheatreNotExistsException("Theatre not exist with Id: " +  screen.getTheatreId());
+			}
 		}
 		else {
-			throw new ScreenAlreadyExistsException("Screen not found : " +  screen);
+			throw new ScreenAlreadyExistsException("Screen Already Exist with ID : " +  screen.getScreenId());
 		}
 		return re;
 	}
-	
-	@RequestMapping(value="/screen" , method = RequestMethod.PUT)
+
+	@RequestMapping(value="/" , method = RequestMethod.PUT)
 	@Transactional
-	public ResponseEntity<Void> updateEmployee(@RequestBody Screen screen) {
+	public ResponseEntity<Void> updateScreen(@RequestBody Screen screen) {
 		ResponseEntity<Void>  re;
 		Optional<Screen> findScreen = screenRepository.findById(screen.getScreenId());
 		if(findScreen.isPresent()) {
-			ScreenServiceImplementation.updateScreen(screen);
+			screenServiceImplementation.updateScreen(screen);
 			re=new ResponseEntity<>(HttpStatus.OK);
 		}
 		else {
-			 re = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ScreenNotExistsException("Screen not exist with Id: " +  screen.getScreenId());
 		}
 		return re;
 	}
 	
-	@RequestMapping(value="/screen/{screen}" , method = RequestMethod.DELETE)
+	@RequestMapping(value="/{screen}" , method = RequestMethod.DELETE)
 	public ResponseEntity<Void> removeScreen(@PathVariable("screen") Screen screen) {
-		Screen removeScreen=ScreenServiceImplementation.removeScreen(screen);
+		Screen removeScreen=screenServiceImplementation.removeScreen(screen);
 		ResponseEntity<Void>  re;
 		if(removeScreen==null) {
-			 re = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ScreenNotExistsException("Screen not exist with Id: " +  screen.getScreenId());
 		}
 		else {
 			re=new ResponseEntity<>(HttpStatus.OK);
@@ -70,24 +83,37 @@ public class ScreenController {
 		return re;
 	}
 	
-	@RequestMapping(value="/screen/{screenId}" , method = RequestMethod.DELETE)
+	@RequestMapping(value="/id/{screenId}" , method = RequestMethod.DELETE)
+	public ResponseEntity<Void> removeScreenById(@PathVariable("screenId") int screenId) {
+		Screen removeScreen=screenServiceImplementation.removeScreen(screenId);
+		ResponseEntity<Void>  re;
+		if(removeScreen==null) {
+			throw new ScreenNotExistsException("Screen not exist with Id: " +  screenId);
+		}
+		else {
+			re=new ResponseEntity<>(HttpStatus.OK);
+		}
+		return re;
+	}
+	
+	@RequestMapping(value="/{screenId}" , method = RequestMethod.GET)
 	public ResponseEntity<Screen> viewScreenById(@PathVariable("screenId") int screenId){
 		ResponseEntity<Screen>  re;
-		Screen findScreen=ScreenServiceImplementation.viewScreenById(screenId);
+		Screen findScreen=screenServiceImplementation.viewScreenById(screenId);
 		if(findScreen==null) {
-			re = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new ScreenNotExistsException("Screen not exist with Id: " + screenId);
 		}
 		else {
 			re = new ResponseEntity<>(findScreen,HttpStatus.FOUND);
 		}
 		return re;
 	}
-	@RequestMapping(value="/screen" , method = RequestMethod.GET)
+	@RequestMapping(value="/" , method = RequestMethod.GET)
 	public ResponseEntity<List<Screen>> viewScreenListAll(){
 		ResponseEntity<List<Screen>> re;
-		List<Screen>screens=ScreenServiceImplementation.viewScreenListAll();
+		List<Screen>screens=screenServiceImplementation.viewScreenListAll();
 		if(screens.isEmpty()) {
-			re = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			throw new ScreenNotExistsException("No Screens");
 		}
 		else {
 			re = new ResponseEntity<>(screens,HttpStatus.OK);
@@ -95,12 +121,12 @@ public class ScreenController {
 		return re;
 	}
 	
-	@RequestMapping(value="/screenT/{theatreId}" , method = RequestMethod.GET)
+	@RequestMapping(value="/theatre/{theatreId}" , method = RequestMethod.GET)
 	public ResponseEntity<List<Screen>> viewScreenByTheatreId(@PathVariable("theatreId") int theatreId){
 		ResponseEntity<List<Screen>>  re;
-		List<Screen>screens=ScreenServiceImplementation.viewScreenList(theatreId);
+		List<Screen>screens=screenServiceImplementation.viewScreenList(theatreId);
 		if(screens.isEmpty()) {
-			re = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			throw new TheatreNotExistsException("Theatre not exist with Id: " + theatreId);
 		}
 		else {
 			re = new ResponseEntity<>(screens,HttpStatus.OK);
