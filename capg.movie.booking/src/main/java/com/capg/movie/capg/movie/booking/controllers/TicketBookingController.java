@@ -123,15 +123,10 @@ public class TicketBookingController {
 		return re;
 	}
 	
-	
-	
-	
 	@GetMapping("/total/{id}")
 	public ResponseEntity<Double> findByticketId(@PathVariable("id") int bookingId) {
 		ResponseEntity<Double> re = null;
-		
 		Optional<TicketBooking> ticketBooking = ticketBookingRepository.findById(bookingId);
-		
 		if(ticketBooking.isPresent()) {
 			Double cost=ticketBookingServiceImplementation.calculateTotalCost(bookingId);
 			re = new ResponseEntity<>(cost,HttpStatus.OK);

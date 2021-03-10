@@ -103,7 +103,6 @@ public class CustomerController {
 		
 		//View all Customers
 		@GetMapping("/")
-
 		public ResponseEntity<List<Customer>> viewAllCustomer() {
 			ResponseEntity<List<Customer>> re;
 			List<Customer>customers=customerServiceImplemntation.viewAllCustomer();
@@ -125,24 +124,29 @@ public class CustomerController {
 		ResponseEntity<Customer>  re;
 		Optional<Customer>findCustomer=customerRepository.findById(c.getCustomerId());
 		if(findCustomer.isPresent()) {
-			Customer customer=customerServiceImplemntation.addCustandt(c.getCustomerId(), c.getTicketBooking());
-			re=new ResponseEntity<>(customer,HttpStatus.OK);
+			Customer cust = customerServiceImplemntation.addCustomerAndTicket(c.getCustomerId(), c.getTicketBooking());
+			re=new ResponseEntity<>(cust, HttpStatus.CREATED);
+			
 		}
 		else {
-			throw new CustomerNotExistsException("Customer with id:"+c.getCustomerId()+" not exists");
+			throw new CustomerNotExistsException("Customer with id:"+c.getCustomerId()+" already exists");
 		}
 		return re;
 	}
 
-
-
-	
-
-	
-
-	
-
-
-	
-	
+	//Deleting a Ticket
+	@DeleteMapping("/{customerId}/{ticketId}")
+	public ResponseEntity<Void> deleteCustomerandTicket(@PathVariable int customerId, @PathVariable int ticketId) {
+		ResponseEntity<Void>re;
+		Optional<Customer>findCustomer=customerRepository.findById(customerId);
+		Optional<Customer>findTicket = customerRepository.findById(ticketId);
+		if(findCustomer.isEmpty()) {
+			throw new CustomerNotExistsException("Customer with id:"+customerId+" does not exists");
+		}
+		else {
+			customerServiceImplemntation.deleteCustomerandTicket(customerId, ticketId);
+			re=new ResponseEntity<>(HttpStatus.OK);
+		}
+		return re;
+	}
 }

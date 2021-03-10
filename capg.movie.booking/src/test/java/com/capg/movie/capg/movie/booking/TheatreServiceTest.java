@@ -19,14 +19,14 @@ class TheatreServiceTest {
 	@Autowired
 	TheatreServiceImplementation theatreServiceImplementation; 
 	
-	//@Test
+//	@Test
 	void testAddTheatre() {
 		Movie movie1=new Movie("movie1", "asda", "asdsa", "sadas", "asdas");
 		Movie movie2=new Movie("movie2", "as", "as", "sa", "as");
 		List<Movie>movies=new ArrayList<Movie>();
 		movies.add(movie1);
 		movies.add(movie2);
-		Screen screen=new Screen(4, null, null, 0, 0);
+		Screen screen=new Screen(4, "screen T", null, 0, 0);
 		List<Screen> screens=new ArrayList<>();
 		screens.add(screen);
 		
@@ -55,7 +55,7 @@ class TheatreServiceTest {
 	
 //	@Test
 	void testViewTheatreById() {
-		int theatreId=5;
+		int theatreId=8;
 		System.out.println(theatreServiceImplementation.viewTheatreById(theatreId));
 	}
 	
@@ -70,9 +70,9 @@ class TheatreServiceTest {
 		System.out.println(theatreServiceImplementation.viewTheatreListByCity("banga"));
 	}
 	
-//	@Test
+	@Test
 	void testRemoveTheatreById() {
-		int theatreId=10;
+		int theatreId=9;
 		System.out.println(theatreServiceImplementation.removeTheatre(theatreId));
 	}
 	

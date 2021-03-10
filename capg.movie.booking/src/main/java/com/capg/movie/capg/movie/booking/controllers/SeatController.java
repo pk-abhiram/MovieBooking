@@ -109,8 +109,8 @@ public class SeatController {
 		return seatRepository.findAll();
 	}
 	
-	@DeleteMapping("/Seat/{seat}")
-	public ResponseEntity<Void> deleteSeat(@PathVariable("seat") Seat seat) {
+	@DeleteMapping("/deleteSeat")
+	public ResponseEntity<Void> deleteSeat(@RequestBody Seat seat) {
 		ResponseEntity<Void> re;
 		Optional<Seat> findSeat = seatRepository.findById(seat.getSeatId());
 

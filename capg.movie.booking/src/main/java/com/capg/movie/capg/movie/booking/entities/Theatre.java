@@ -20,10 +20,10 @@ public class Theatre {
 	int theatreId;
 	String theatreName;
 	String theatreCity;
-	@OneToMany(targetEntity = Movie.class,cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Movie.class,cascade = CascadeType.ALL, orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Movie> listOfMovies;
-	@OneToMany(targetEntity = Screen.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Screen.class,cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	List<Screen> listOfScreens;
 	String managerName;

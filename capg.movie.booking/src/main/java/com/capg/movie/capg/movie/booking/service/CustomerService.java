@@ -17,7 +17,7 @@ public interface CustomerService {
 	public Customer viewCustomerById(int id);
 	public Customer deleteCustomer(int id);
 	public Customer updateCustomer(Customer c);
-	public Customer addCustandt(int id,List<TicketBooking> ticket);
+	public Customer addCustomerAndTicket(int id,List<TicketBooking> ticket);
 	public void deleteCustomerandTicket(int id,int ticketId);
 	public Customer addCustomer(Customer c);
 

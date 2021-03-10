@@ -92,18 +92,17 @@ public class CustomerServiceImplementation implements CustomerService{
 		}
 
 		
-	public Customer addCustandt(int id,List<TicketBooking> ticket) {
+	public Customer addCustomerAndTicket(int id,List<TicketBooking> ticket) {
 		Optional<Customer> customer = customerRepostitory.findById(id);
+		Customer cust = customer.get(); 
 		if(customer.isPresent()) {
-			Customer cust = customer.get(); 
 			for(TicketBooking t:ticket) {
 				cust.getTicketBooking().add(t);
 
 			}
 			customerRepostitory.save(cust);
-			return cust;
 		}
-		return null;
+		return cust;
 	}
 
 
@@ -120,8 +119,6 @@ public class CustomerServiceImplementation implements CustomerService{
 	}
 
 	
-
-
 	
 
 	

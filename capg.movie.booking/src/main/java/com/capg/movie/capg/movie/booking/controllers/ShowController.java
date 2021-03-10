@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,7 +126,7 @@ public class ShowController {
 	}
 	
 	@RequestMapping(value="/LocalDate/{date}" , method = RequestMethod.GET)
-	public ResponseEntity<List<Show>> viewScreenByDate(@PathVariable("date") LocalDate date){
+	public ResponseEntity<List<Show>> viewScreenByDate(@PathVariable("date") @DateTimeFormat(iso=ISO.DATE)  LocalDate date){
 		ResponseEntity<List<Show>>  re;
 		List<Show> findShow=showServiceImplementation.viewShowList(date);
 		if(findShow.isEmpty()) {
