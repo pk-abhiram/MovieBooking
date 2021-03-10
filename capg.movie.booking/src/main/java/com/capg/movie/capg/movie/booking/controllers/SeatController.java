@@ -88,7 +88,7 @@ public class SeatController {
 		return re;
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/allSeats")
 	public ResponseEntity<List<Seat>> viewAllSeats(){
 		ResponseEntity<List<Seat>> re;
 		List<Seat>seats=seatServiceImplementation.viewSeatList();

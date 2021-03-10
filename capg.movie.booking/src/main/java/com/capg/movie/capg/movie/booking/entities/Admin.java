@@ -17,7 +17,7 @@ public class Admin {
 	String adminName;
 	String adminContact;
 	
-	@OneToOne(mappedBy = "admin",targetEntity = User.class)
+	@OneToOne(targetEntity = User.class)
 	User user;
 
 	//Constructors
