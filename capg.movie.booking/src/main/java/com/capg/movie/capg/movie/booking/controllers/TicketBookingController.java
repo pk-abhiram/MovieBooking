@@ -72,7 +72,7 @@ public class TicketBookingController {
 		if(findBooking.isPresent()) {
 			TicketBooking ticketBookingRemove = null;
 			ticketBookingRemove = findBooking.get();
-			ticketBookingServiceImplementation.cancelBooking(ticketBooking);
+			ticketBookingServiceImplementation.cancelBooking(ticketBookingRemove);
 			re = new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}
 		else {

@@ -75,7 +75,7 @@ public class SeatServiceImplementation implements SeatService{
 
 	public Seat removeSeat(int seatId) {
 		Optional<Seat> findSeat = seatRepository.findById(seatId);
-		if(findSeat.isEmpty()) {
+		if(findSeat.isPresent()) {
 			seatRepository.deleteById(seatId);
 		}
 		return findSeat.get();

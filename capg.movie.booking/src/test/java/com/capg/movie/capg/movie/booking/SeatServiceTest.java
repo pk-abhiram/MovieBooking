@@ -11,7 +11,7 @@ class SeatServiceTest {
 	@Autowired
 	SeatServiceImplementation seatServiceImplementaion;
 
-	//	@Test
+//	@Test
 	void testAddSeat() {
 		Seat seat = new Seat("J50", "Standard", 220.03);
 		seatServiceImplementaion.addSeat(seat);
@@ -31,9 +31,9 @@ class SeatServiceTest {
 		seatServiceImplementaion.removeSeat(seat);
 		
 	}
-//	@Test
+	@Test
 	void testRemoveSeatById() {
-		int seatId=3;
+		int seatId=1;
 		seatServiceImplementaion.removeSeat(seatId);
 		
 	}
